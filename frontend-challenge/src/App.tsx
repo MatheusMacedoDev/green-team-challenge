@@ -1,9 +1,10 @@
 import './App.css';
+import Aside from './components/Aside';
 
 function App() {
     return (
         <>
-            <p className='bg-sky-200'>Hello, world!</p>
+            <Aside />
         </>
     )
 }
