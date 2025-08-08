@@ -6,6 +6,7 @@ import com.macedo.backend_challenge.application.contracts.responses.GetCharacter
 import com.macedo.backend_challenge.application.exceptions.CharacterNotFoundException;
 import com.macedo.backend_challenge.domain.entities.Character;
 import com.macedo.backend_challenge.application.services.CharacterService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class CharacterController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetCharacterResponseDTO>  getCharacterById(@RequestParam Integer id) {
+    public ResponseEntity<GetCharacterResponseDTO>  getCharacterById(@PathVariable Integer id) {
         try {
             var response = characterService.getById(id);
             return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
@@ -44,10 +45,21 @@ public class CharacterController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Character> updateCharacter(@RequestParam Integer id, @RequestBody UpdateCharacterRequestDTO request) {
+    public ResponseEntity<Character> updateCharacter(@PathVariable Integer id, @RequestBody UpdateCharacterRequestDTO request) {
         try {
             var response = characterService.update(id, request);
             return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
+        } catch (CharacterNotFoundException e) {
+            return new ResponseEntity<>(HttpStatusCode.valueOf(404));
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCharacter(@PathVariable Integer id) {
+        try {
+            characterService.remove(id);
+
+            return new ResponseEntity<>(HttpStatusCode.valueOf(204));
         } catch (CharacterNotFoundException e) {
             return new ResponseEntity<>(HttpStatusCode.valueOf(404));
         }

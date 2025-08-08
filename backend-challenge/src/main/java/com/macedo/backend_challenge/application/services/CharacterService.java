@@ -80,6 +80,12 @@ public class CharacterService {
     }
 
     public void remove(Integer id) {
+        var character = characterRepository.getCharacterById(id);
+
+        if (character == null) {
+            throw new CharacterNotFoundException();
+        }
+
         characterRepository.deleteById(id);
     }
 
