@@ -1,6 +1,7 @@
 package com.macedo.backend_challenge.application.controllers;
 
 import com.macedo.backend_challenge.application.contracts.requests.CreateCharacterRequestDTO;
+import com.macedo.backend_challenge.application.contracts.requests.UpdateCharacterRequestDTO;
 import com.macedo.backend_challenge.application.contracts.responses.GetCharacterResponseDTO;
 import com.macedo.backend_challenge.application.exceptions.CharacterNotFoundException;
 import com.macedo.backend_challenge.domain.entities.Character;
@@ -36,6 +37,16 @@ public class CharacterController {
     public ResponseEntity<GetCharacterResponseDTO>  getCharacterById(@RequestParam Integer id) {
         try {
             var response = characterService.getById(id);
+            return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
+        } catch (CharacterNotFoundException e) {
+            return new ResponseEntity<>(HttpStatusCode.valueOf(404));
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Character> updateCharacter(@RequestParam Integer id, @RequestBody UpdateCharacterRequestDTO request) {
+        try {
+            var response = characterService.update(id, request);
             return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
         } catch (CharacterNotFoundException e) {
             return new ResponseEntity<>(HttpStatusCode.valueOf(404));

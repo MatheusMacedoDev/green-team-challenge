@@ -1,6 +1,7 @@
 package com.macedo.backend_challenge.application.services;
 
 import com.macedo.backend_challenge.application.contracts.requests.CreateCharacterRequestDTO;
+import com.macedo.backend_challenge.application.contracts.requests.UpdateCharacterRequestDTO;
 import com.macedo.backend_challenge.application.contracts.responses.GetCharacterResponseDTO;
 import com.macedo.backend_challenge.application.exceptions.CharacterNotFoundException;
 import com.macedo.backend_challenge.domain.entities.Character;
@@ -44,7 +45,37 @@ public class CharacterService {
         );
     }
 
-    public Character update(Character character) {
+    public Character update(Integer id, UpdateCharacterRequestDTO request) {
+        var character = characterRepository.getCharacterById(id);
+
+        if (character == null) {
+            throw new CharacterNotFoundException();
+        }
+
+        if (request.name() != null)
+            character.setName(request.name());
+
+        if (request.className() != null)
+            character.setClassName(request.className());
+
+        if (request.level() != null)
+            character.setLevel(request.level());
+
+        if (request.hp() != null)
+            character.setHp(request.hp());
+
+        if (request.mp() != null)
+            character.setMp(request.mp());
+
+        if (request.intelligence() != null)
+            character.setIntelligence(request.intelligence());
+
+        if (request.strength() != null)
+            character.setStrength(request.strength());
+
+        if (request.dexterity() != null)
+            character.setDexterity(request.dexterity());
+
         return characterRepository.save(character);
     }
 
