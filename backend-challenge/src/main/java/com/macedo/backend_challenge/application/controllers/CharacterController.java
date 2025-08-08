@@ -1,6 +1,8 @@
 package com.macedo.backend_challenge.application.controllers;
 
 import com.macedo.backend_challenge.application.contracts.requests.CreateCharacterRequestDTO;
+import com.macedo.backend_challenge.application.contracts.responses.GetCharacterResponseDTO;
+import com.macedo.backend_challenge.application.exceptions.CharacterNotFoundException;
 import com.macedo.backend_challenge.domain.entities.Character;
 import com.macedo.backend_challenge.application.services.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ public class CharacterController {
     @PostMapping
     public ResponseEntity<Character> saveCharacter(@RequestBody CreateCharacterRequestDTO request) {
         try {
-            Character character = characterService.save(request);
+            var character = characterService.save(request);
             return new ResponseEntity<>(character, HttpStatusCode.valueOf(201));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatusCode.valueOf(500));
@@ -28,6 +30,16 @@ public class CharacterController {
     @GetMapping
     public Iterable<Character> getAllCharacters() {
         return characterService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GetCharacterResponseDTO>  getCharacterById(@RequestParam Integer id) {
+        try {
+            var response = characterService.getById(id);
+            return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
+        } catch (CharacterNotFoundException e) {
+            return new ResponseEntity<>(HttpStatusCode.valueOf(404));
+        }
     }
 
 }
