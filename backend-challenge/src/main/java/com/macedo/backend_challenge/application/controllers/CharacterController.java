@@ -6,7 +6,6 @@ import com.macedo.backend_challenge.application.contracts.responses.GetCharacter
 import com.macedo.backend_challenge.application.exceptions.CharacterNotFoundException;
 import com.macedo.backend_challenge.domain.entities.Character;
 import com.macedo.backend_challenge.application.services.CharacterService;
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;

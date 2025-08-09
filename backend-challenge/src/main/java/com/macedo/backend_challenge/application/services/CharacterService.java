@@ -27,7 +27,7 @@ public class CharacterService {
     }
 
     public GetCharacterResponseDTO getById(Integer id) {
-        var character = characterRepository.getCharacterById(id);
+        var character = characterRepository.getByCharacterId(id);
 
         if (character == null) {
             throw new CharacterNotFoundException();
@@ -46,7 +46,7 @@ public class CharacterService {
     }
 
     public Character update(Integer id, UpdateCharacterRequestDTO request) {
-        var character = characterRepository.getCharacterById(id);
+        var character = characterRepository.getByCharacterId(id);
 
         if (character == null) {
             throw new CharacterNotFoundException();
@@ -80,7 +80,7 @@ public class CharacterService {
     }
 
     public void remove(Integer id) {
-        var character = characterRepository.getCharacterById(id);
+        var character = characterRepository.getByCharacterId(id);
 
         if (character == null) {
             throw new CharacterNotFoundException();

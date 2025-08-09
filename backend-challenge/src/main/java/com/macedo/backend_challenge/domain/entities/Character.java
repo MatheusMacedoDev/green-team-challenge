@@ -2,13 +2,12 @@ package com.macedo.backend_challenge.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.macedo.backend_challenge.application.contracts.requests.CreateCharacterRequestDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity(name = "game_character")
 @Getter
@@ -18,7 +17,7 @@ public class Character {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer characterId;
 
     private String name;
 
@@ -35,6 +34,9 @@ public class Character {
     private Integer intelligence;
 
     private Integer dexterity;
+
+    @OneToMany(mappedBy = "gameMasterId")
+    private List<GameMaster> gameMasters;
 
     public Character(CreateCharacterRequestDTO request) {
         this.name = request.name();
