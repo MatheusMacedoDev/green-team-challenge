@@ -1,4 +1,4 @@
-package com.macedo.backend_challenge.infra.security.authorization;
+package com.macedo.backend_challenge.infra.security.auth;
 
 import com.macedo.backend_challenge.domain.repositories.GameMasterRepository;
 import org.springframework.beans.factory.annotation.Autowired;

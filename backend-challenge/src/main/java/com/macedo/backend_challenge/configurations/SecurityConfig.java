@@ -1,6 +1,6 @@
 package com.macedo.backend_challenge.configurations;
 
-import com.macedo.backend_challenge.infra.security.authorization.UserAuthorizationFilter;
+import com.macedo.backend_challenge.infra.security.auth.UserAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

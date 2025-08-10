@@ -7,7 +7,7 @@ import com.macedo.backend_challenge.application.exceptions.InvalidLoginException
 import com.macedo.backend_challenge.domain.entities.GameMaster;
 import com.macedo.backend_challenge.domain.repositories.CharacterRepository;
 import com.macedo.backend_challenge.domain.repositories.GameMasterRepository;
-import com.macedo.backend_challenge.infra.security.authentication.TokenStrategy;
+import com.macedo.backend_challenge.infra.security.auth.TokenStrategy;
 import com.macedo.backend_challenge.infra.security.cryptography.CryptographyStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

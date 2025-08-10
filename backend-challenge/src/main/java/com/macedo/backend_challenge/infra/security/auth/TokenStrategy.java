@@ -1,4 +1,4 @@
-package com.macedo.backend_challenge.infra.security.authentication;
+package com.macedo.backend_challenge.infra.security.auth;
 
 import com.macedo.backend_challenge.domain.entities.GameMaster;
 

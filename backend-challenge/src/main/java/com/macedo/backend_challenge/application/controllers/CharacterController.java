@@ -2,7 +2,8 @@ package com.macedo.backend_challenge.application.controllers;
 
 import com.macedo.backend_challenge.application.contracts.requests.CreateCharacterRequestDTO;
 import com.macedo.backend_challenge.application.contracts.requests.UpdateCharacterRequestDTO;
-import com.macedo.backend_challenge.application.contracts.responses.GetCharacterResponseDTO;
+import com.macedo.backend_challenge.application.contracts.responses.CharacterDTO;
+import com.macedo.backend_challenge.application.contracts.responses.GetSpecificCharacterResponseDTO;
 import com.macedo.backend_challenge.application.exceptions.CharacterNotFoundException;
 import com.macedo.backend_challenge.domain.entities.Character;
 import com.macedo.backend_challenge.application.services.CharacterService;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/characters")
@@ -32,12 +35,12 @@ public class CharacterController {
     }
 
     @GetMapping
-    public Iterable<Character> getAllCharacters() {
+    public List<CharacterDTO> getAllCharacters() {
         return characterService.getAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetCharacterResponseDTO>  getCharacterById(@PathVariable Integer id) {
+    public ResponseEntity<GetSpecificCharacterResponseDTO>  getCharacterById(@PathVariable Integer id) {
         try {
             var response = characterService.getById(id);
             return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));
@@ -48,7 +51,7 @@ public class CharacterController {
 
     @PutMapping("/{id}")
     @Operation(security = @SecurityRequirement(name = "bearer-jwt"))
-    public ResponseEntity<Character> updateCharacter(@PathVariable Integer id, @RequestBody UpdateCharacterRequestDTO request) {
+    public ResponseEntity<CharacterDTO> updateCharacter(@PathVariable Integer id, @RequestBody UpdateCharacterRequestDTO request) {
         try {
             var response = characterService.update(id, request);
             return new ResponseEntity<>(response, HttpStatusCode.valueOf(200));

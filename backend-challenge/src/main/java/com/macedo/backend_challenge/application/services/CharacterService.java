@@ -2,7 +2,8 @@ package com.macedo.backend_challenge.application.services;
 
 import com.macedo.backend_challenge.application.contracts.requests.CreateCharacterRequestDTO;
 import com.macedo.backend_challenge.application.contracts.requests.UpdateCharacterRequestDTO;
-import com.macedo.backend_challenge.application.contracts.responses.GetCharacterResponseDTO;
+import com.macedo.backend_challenge.application.contracts.responses.CharacterDTO;
+import com.macedo.backend_challenge.application.contracts.responses.GetSpecificCharacterResponseDTO;
 import com.macedo.backend_challenge.application.exceptions.CharacterNotFoundException;
 import com.macedo.backend_challenge.domain.entities.Character;
 import com.macedo.backend_challenge.domain.repositories.CharacterRepository;
@@ -22,18 +23,18 @@ public class CharacterService {
         return characterRepository.save(character);
     }
 
-    public List<Character> getAll() {
-        return  characterRepository.findAll();
+    public List<CharacterDTO> getAll() {
+        return  characterRepository.findAll().stream().map(CharacterDTO::new).toList();
     }
 
-    public GetCharacterResponseDTO getById(Integer id) {
+    public GetSpecificCharacterResponseDTO getById(Integer id) {
         var character = characterRepository.getByCharacterId(id);
 
         if (character == null) {
             throw new CharacterNotFoundException();
         }
 
-        return new GetCharacterResponseDTO(
+        return new GetSpecificCharacterResponseDTO(
             character.getName(),
             character.getClassName(),
             character.getLevel(),
@@ -45,7 +46,7 @@ public class CharacterService {
         );
     }
 
-    public Character update(Integer id, UpdateCharacterRequestDTO request) {
+    public CharacterDTO update(Integer id, UpdateCharacterRequestDTO request) {
         var character = characterRepository.getByCharacterId(id);
 
         if (character == null) {
@@ -76,7 +77,7 @@ public class CharacterService {
         if (request.dexterity() != null)
             character.setDexterity(request.dexterity());
 
-        return characterRepository.save(character);
+        return new CharacterDTO(characterRepository.save(character));
     }
 
     public void remove(Integer id) {

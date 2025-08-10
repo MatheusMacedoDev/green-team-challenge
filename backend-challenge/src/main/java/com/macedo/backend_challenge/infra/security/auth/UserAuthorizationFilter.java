@@ -1,8 +1,7 @@
-package com.macedo.backend_challenge.infra.security.authorization;
+package com.macedo.backend_challenge.infra.security.auth;
 
 import com.macedo.backend_challenge.domain.entities.GameMaster;
 import com.macedo.backend_challenge.domain.repositories.GameMasterRepository;
-import com.macedo.backend_challenge.infra.security.authentication.TokenStrategy;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
