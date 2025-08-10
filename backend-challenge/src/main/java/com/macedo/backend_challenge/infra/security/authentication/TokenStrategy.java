@@ -4,5 +4,5 @@ import com.macedo.backend_challenge.domain.entities.GameMaster;
 
 public interface TokenStrategy {
     String generateToken(GameMaster gameMaster);
-    String validateToken(String token);
+    String getSubjectFromToken(String token);
 }

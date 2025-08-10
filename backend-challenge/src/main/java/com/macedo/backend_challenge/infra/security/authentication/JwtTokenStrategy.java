@@ -21,20 +21,19 @@ public class JwtTokenStrategy implements TokenStrategy {
 
     public String generateToken(GameMaster gameMaster) {
         try {
+            Algorithm algorithm = Algorithm.HMAC256(jwtSectret);
 
+            return JWT.create()
+                    .withIssuer("diet-maker-api")
+                    .withSubject(gameMaster.getEmail())
+                    .withExpiresAt(generateExpirationDate())
+                    .sign(algorithm);
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Error while generating token", exception);
         }
-        Algorithm algorithm = Algorithm.HMAC256(jwtSectret);
-
-        return JWT.create()
-                .withIssuer("diet-maker-api")
-                .withSubject(gameMaster.getEmail())
-                .withExpiresAt(generateExpirationDate())
-                .sign(algorithm);
     }
 
-    public String validateToken(String token) {
+    public String getSubjectFromToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(jwtSectret);
             return JWT.require(algorithm)

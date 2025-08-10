@@ -6,6 +6,8 @@ import com.macedo.backend_challenge.application.contracts.responses.GetCharacter
 import com.macedo.backend_challenge.application.exceptions.CharacterNotFoundException;
 import com.macedo.backend_challenge.domain.entities.Character;
 import com.macedo.backend_challenge.application.services.CharacterService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ public class CharacterController {
     private CharacterService characterService;
 
     @PostMapping
+    @Operation(security = @SecurityRequirement(name = "bearer-jwt"))
     public ResponseEntity<Character> saveCharacter(@RequestBody CreateCharacterRequestDTO request) {
         try {
             var character = characterService.save(request);
@@ -44,6 +47,7 @@ public class CharacterController {
     }
 
     @PutMapping("/{id}")
+    @Operation(security = @SecurityRequirement(name = "bearer-jwt"))
     public ResponseEntity<Character> updateCharacter(@PathVariable Integer id, @RequestBody UpdateCharacterRequestDTO request) {
         try {
             var response = characterService.update(id, request);
@@ -54,6 +58,7 @@ public class CharacterController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(security = @SecurityRequirement(name = "bearer-jwt"))
     public ResponseEntity<Void> deleteCharacter(@PathVariable Integer id) {
         try {
             characterService.remove(id);
